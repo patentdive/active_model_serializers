@@ -5,6 +5,7 @@
 module Grape
   module Formatters
     module ActiveModelSerializers
+      RequestContext = Struct.new(:original_url, :query_parameters)
       def self.call(resource, env)
         serializer_options = {}
         serializer_options.merge!(env[:active_model_serializer_options]) if env[:active_model_serializer_options]
