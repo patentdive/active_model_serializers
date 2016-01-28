@@ -8,7 +8,8 @@ module Grape
       def self.call(resource, env)
         serializer_options = {}
         serializer_options.merge!(env[:active_model_serializer_options]) if env[:active_model_serializer_options]
-        ActiveModel::SerializableResource.new(resource, serializer_options).to_json
+        serializer_options[:context] = RequestContext.new(env['REQUEST_URI'],env['rack.request.query_hash'])
+        ActiveModel::SerializableResource.new(resource, serializer_options).to_json(serializer_options)
       end
     end
   end
