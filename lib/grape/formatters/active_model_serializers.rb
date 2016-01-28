@@ -10,6 +10,7 @@ module Grape
         serializer_options = {}
         serializer_options.merge!(env[:active_model_serializer_options]) if env[:active_model_serializer_options]
         serializer_options[:context] = RequestContext.new(env['REQUEST_URI'],env['rack.request.query_hash'])
+        serializer_options[:serialization_context] = serializer_options[:context]
         ActiveModel::SerializableResource.new(resource, serializer_options).to_json(serializer_options)
       end
     end
